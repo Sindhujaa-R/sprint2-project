@@ -5,22 +5,32 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class CertificateService {
-  API="http://localhost:8080";
-  public registerCertificate(certificateData: any)
-  {
-    return this.http.post(this.API + '/registerCertificate' , certificateData);
-  }
+  API = "http://localhost:8080/certificateservice";
 
-  public getCertificate(){
-    return this.http.get(this.API+'/getCertificate');
-  }
-
-  public deleteCertificate(C_id:any){
-    return this.http.delete(this.API+'/deleteCertificate?C_id=' + C_id);
-  }
-
-  public updateCertificate(certificate: any){
-    return this.http.put(this.API +'/updateCertificate', certificate);
-  }
   constructor(private http: HttpClient) { }
+
+  // Register a new certificate
+  public registerCertificate(certificateData: any) {
+    return this.http.post(this.API, certificateData);
+  }
+
+  // Get all certificates
+  public getCertificates() {
+    return this.http.get(this.API);
+  }
+
+  // Get certificate by ID
+  public getCertificateById(id: number) {
+    return this.http.get(`${this.API}/${id}`);
+  }
+
+  // Delete certificate by ID
+  public deleteCertificate(id: number) {
+    return this.http.delete(`${this.API}/${id}`);
+  }
+
+  // Update certificate
+  public updateCertificate(id: number, certificate: any) {
+    return this.http.put(`${this.API}/${id}`, certificate);
+  }
 }
